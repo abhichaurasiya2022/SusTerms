@@ -1,0 +1,13 @@
+# Dev environment
+pip
+autopep8
+
+# App
+flask
+pytesseract
+openai
+google-generativeai
+transformers
+pymongo
+bcrypt
+python-dotenv

@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SusTerms | Contract Risk Analysis</title>
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <!-- Materialize CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <style>
+        :root {
+            --primary: #1e88e5;
+            --primary-light: #6ab7ff;
+            --primary-dark: #005cb2;
+            --secondary: #26c6da;
+            --accent: #f50057;
+            --success: #00c853;
+            --warning: #ffc400;
+            --error: #d50000;
+            --bg-light: #f5f7fa;
+            --text-dark: #263238;
+            --text-medium: #546e7a;
+            --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            --border-radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .brand-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+
+        main {
+            flex: 1 0 auto;
+            padding: 40px 0 60px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 90%;
+        }
+
+        /* Nav bar styles */
+        nav {
+            background: white;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            height: 70px;
+            line-height: 70px;
+        }
+
+        nav .brand-logo {
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            height: 70px;
+            padding-left: 20px;
+        }
+
+        nav .brand-logo .logo-text {
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        nav .brand-logo .highlight {
+            color: var(--accent);
+        }
+
+        nav ul a {
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        nav ul a:hover {
+            background-color: rgba(30, 136, 229, 0.05);
+            color: var(--primary);
+        }
+
+        .dropdown-content {
+            border-radius: 8px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            width: 180px !important;
+            overflow: hidden;
+        }
+
+        .dropdown-content li>a {
+            color: var(--text-dark);
+            font-weight: 500;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown-content li>a:hover {
+            background-color: rgba(30, 136, 229, 0.05);
+        }
+
+        .dropdown-content li>a>i {
+            margin-right: 10px;
+        }
+
+        .dropdown-trigger {
+            cursor: pointer;
+        }
+
+        .avatar-wrapper {
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            height: 70px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 500;
+            margin-right: 12px;
+        }
+
+        .user-name {
+            font-weight: 500;
+        }
+
+        /* Dashboard grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            margin-top: 30px;
+        }
+
+        .grid-col-12 {
+            grid-column: span 12;
+        }
+
+        .grid-col-8 {
+            grid-column: span 8;
+        }
+
+        .grid-col-4 {
+            grid-column: span 4;
+        }
+
+        @media (max-width: 992px) {
+
+            .grid-col-8,
+            .grid-col-4 {
+                grid-column: span 12;
+            }
+        }
+
+        /* Card styles */
+        .dashboard-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            padding: 30px;
+            margin-bottom: 0;
+            height: 100%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .dashboard-card.has-bg {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .dashboard-card.has-bg::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 180px;
+            height: 180px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .dashboard-card.has-bg::after {
+            content: '';
+            position: absolute;
+            bottom: -60px;
+            left: -60px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+        }
+
+        .page-title {
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 8px;
+            font-size: 2.2rem;
+        }
+
+        .subtitle {
+            color: var(--text-medium);
+            font-weight: 400;
+            margin-top: 0;
+            margin-bottom: 24px;
+        }
+
+        /* Form styles */
+        .input-field {
+            margin-bottom: 32px;
+        }
+
+        .input-field label {
+            color: var(--text-medium);
+            font-weight: 500;
+        }
+
+        .input-field textarea {
+            min-height: 100px;
+            max-height: 500px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            box-sizing: border-box;
+            margin-top: 10px;
+            resize: vertical;
+            overflow-y: auto;
+        }
+
+        .input-field input[type=text]:focus+label,
+        .input-field textarea:focus+label {
+            color: var(--primary) !important;
+        }
+
+        .input-field input[type=text]:focus,
+        .input-field textarea:focus {
+            border-bottom: 2px solid var(--primary) !important;
+            box-shadow: 0 1px 0 0 var(--primary) !important;
+        }
+
+        .input-field .prefix {
+            color: var(--text-medium);
+        }
+
+        .input-field .prefix.active {
+            color: var(--primary);
+        }
+
+        .file-field .btn {
+            background-color: var(--primary);
+            border-radius: 6px;
+            box-shadow: none;
+            height: 45px;
+            line-height: 45px;
+            text-transform: none;
+            font-weight: 500;
+            padding: 0 20px;
+        }
+
+        .file-field .file-path-wrapper {
+            height: 45px;
+        }
+
+        .file-field .file-path {
+            border-radius: 6px;
+            padding-left: 15px;
+        }
+
+        .input-field textarea {
+            min-height: 100px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            box-sizing: border-box;
+            margin-top: 10px;
+        }
+
+        .submit-btn {
+            background-color: var(--primary);
+            border-radius: 6px;
+            padding: 0 30px;
+            height: 50px;
+            line-height: 50px;
+            text-transform: none;
+            font-weight: 500;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 20px rgba(30, 136, 229, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--primary-dark);
+            box-shadow: 0 6px 25px rgba(30, 136, 229, 0.4);
+        }
+
+        .submit-btn i {
+            margin-right: 8px;
+        }
+
+        /* Result cards */
+        .section-header {
+            margin: 50px 0 20px 0;
+            font-weight: 600;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+        }
+
+        .section-header i {
+            color: var(--primary);
+            margin-right: 10px;
+        }
+
+        .results-card {
+            border-left: 4px solid var(--primary);
+        }
+
+        .risks-card {
+            border-left: 4px solid var(--accent);
+        }
+
+        .card-title {
+            font-weight: 600;
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+        }
+
+        .card-title i {
+            margin-right: 15px;
+            background: rgba(30, 136, 229, 0.1);
+            color: var(--primary);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .risks-card .card-title {
+            color: var(--accent);
+        }
+
+        .risks-card .card-title i {
+            background: rgba(245, 0, 87, 0.1);
+            color: var(--accent);
+        }
+
+        /* Flash messages */
+        .flashes {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 30px;
+        }
+
+        .flashes li {
+            padding: 18px 24px;
+            margin-bottom: 15px;
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+        }
+
+        .flashes li.success {
+            background-color: rgba(0, 200, 83, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(0, 200, 83, 0.2);
+        }
+
+        .flashes li.error {
+            background-color: rgba(213, 0, 0, 0.1);
+            color: var(--error);
+            border: 1px solid rgba(213, 0, 0, 0.2);
+        }
+
+        .flashes li i {
+            margin-right: 15px;
+            font-size: 24px;
+        }
+
+        /* Risk list */
+        .risks-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-gap: 15px;
+        }
+
+        .risk-item {
+            padding: 18px 20px;
+            border-radius: 8px;
+            background-color: rgba(245, 0, 87, 0.05);
+            display: flex;
+            align-items: flex-start;
+            transition: transform 0.2s ease;
+        }
+
+        .risk-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .risk-item i {
+            color: var(--accent);
+            margin-right: 15px;
+            font-size: 20px;
+            margin-top: 2px;
+        }
+
+        .risk-item-content {
+            flex: 1;
+        }
+
+        .risk-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--accent);
+        }
+
+        .risk-desc {
+            color: var(--text-medium);
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        /* Stats boxes */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 768px) {
+            .stat-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stat-box {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 24px;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+        }
+
+        .stat-icon.blue {
+            background: rgba(30, 136, 229, 0.1);
+            color: #FFFF;
+        }
+
+        .stat-icon.pink {
+            background: rgba(245, 0, 87, 0.1);
+            color: #FFFF;
+        }
+
+        .stat-icon.green {
+            background: rgba(0, 200, 83, 0.1);
+            color: #FFFF;
+        }
+
+        .stat-icon i {
+            font-size: 28px;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: var(--text-medium);
+            font-size: 14px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: white;
+            color: var(--text-medium);
+            padding: 30px 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .footer-links a {
+            color: var(--text-medium);
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        /* Loading animation */
+        .loader {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+        }
+
+        .loader .dot {
+            width: 12px;
+            height: 12px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            margin: 0 5px;
+            animation: bounce 1.5s infinite ease-in-out;
+        }
+
+        .loader .dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .loader .dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .loader .dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            80%,
+            100% {
+                transform: scale(0);
+            }
+
+            40% {
+                transform: scale(1);
+            }
+        }
+
+        #results-anchor {
+            scroll-margin-top: 80px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo">
+                <span class="logo-text">Sus<span class="highlight">Terms</span></span>
+            </a>
+            <ul id="nav-mobile" class="right">
+                <li>
+                    <a class="dropdown-trigger" data-target="profile-dropdown">
+                        <div class="avatar-wrapper">
+                            <div class="avatar">{{ username[0] }}</div>
+                            <span class="user-name hide-on-med-and-down">{{ username }}</span>
+                            <i class="material-icons right">arrow_drop_down</i>
+                        </div>
+                    </a>
+                    <ul id="profile-dropdown" class="dropdown-content">
+                        <li><a href="/logout"><i class="material-icons">exit_to_app</i>Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <ul class="flashes animate-fade-in">
+                {% for category, message in messages %}
+                <li class="{{ category }}">
+                    <i class="material-icons">{% if category == 'success' %}check_circle{% else %}error_outline{% endif
+                        %}</i>
+                    <div>
+                        <strong>{{ category|title }}!</strong> {{ message }}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+
+            <!-- Header Section -->
+            <h1 class="page-title animate-fade-in">Document Analysis</h1>
+            <p class="subtitle animate-fade-in">Upload a contract or paste text to identify suspicious terms and
+                potential risks.</p>
+
+            <!-- Stats Section (Only shows when there are results) -->
+            {% if summary or risks %}
+            <div class="stat-grid animate-fade-in">
+                <div class="stat-box">
+                    <div class="stat-icon blue">
+                        <i class="material-icons">description</i>
+                    </div>
+                    <div class="stat-number">1</div>
+                    <div class="stat-label">Document Analyzed</div>
+                </div>
+
+                <div class="stat-box">
+                    <div class="stat-icon pink">
+                        <i class="material-icons">warning</i>
+                    </div>
+                    <div class="stat-number">{{ risks|length }}</div>
+                    <div class="stat-label">Risks Identified</div>
+                </div>
+
+                <div class="stat-box">
+                    <div class="stat-icon green">
+                        <i class="material-icons">verified</i>
+                    </div>
+                    <div class="stat-number">{{ 5 - (risks|length) }}</div>
+                    <div class="stat-label">Safe Terms</div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Upload Form Card -->
+                <div class="grid-col-12">
+                    <div class="dashboard-card animate-fade-in">
+                        <form id="analysis-form" method="post" action="/dashboard" enctype="multipart/form-data">
+                          {% if request.args.get('history_id') %}
+                          <input type="hidden" name="history_id" value="{{ request.args.get('history_id') }}">
+                          {% endif %}
+                            <div class="row">
+                                <div class="col s12">
+                                    <div class="file-field input-field">
+                                        <div class="btn">
+                                            <i class="material-icons left">attach_file</i>
+                                            <span>Choose File</span>
+                                            <input type="file" name="file" id="file">
+                                        </div>
+                                        <div class="file-path-wrapper">
+                                            <input class="file-path validate" type="text"
+                                                placeholder="Upload a document or contract">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col s12">
+                                    <div class="input-field">
+                                        <i class="material-icons prefix">create</i>
+                                        <textarea id="text" name="text"
+                                            class="materialize-textarea">{{ input_text if input_text else '' }}</textarea>
+                                        <label for="text">Or paste text here</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col s12 center-align">
+                                    <button class="btn-large waves-effect waves-light submit-btn" type="submit">
+                                        <i class="material-icons left">search</i>Analyze Document
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- Loading indicator -->
+                        <div class="loader" id="loader">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                    </div>
+                </div>
+
+              <!-- Results Section -->
+{% if summary or risks %}
+<div id="results-anchor" class="grid-col-12">
+    <h4 class="section-header animate-fade-in">
+        <i class="material-icons">analytics</i>Analysis Results
+    </h4>
+</div>
+
+<div class="grid-col-12 dashboard-grid">
+    {% if summary %}
+    <div class="grid-col-8">
+        <div class="dashboard-card results-card animate-fade-in">
+            <h5 class="card-title">
+                <i class="material-icons">description</i>
+                Summary
+            </h5>
+            <p>{{ summary }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if risks %}
+    <div class="grid-col-4">
+        <div class="dashboard-card risks-card animate-fade-in">
+            <h5 class="card-title">
+                <i class="material-icons">warning</i>
+                Risks Detected
+            </h5>
+            <div class="risks-list">
+                {% for risk in risks %}
+                <div class="risk-item">
+                    <i class="material-icons">priority_high</i>
+                    <div class="risk-item-content">
+                        <div class="risk-title">Risk {{ loop.index }}</div>
+                        <div class="risk-desc">{{ risk.sentence }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+
+
+                <!-- Analysis History Section -->
+                <!-- Analysis History Section -->
+   <!-- Analysis History Section -->
+{% if history %}
+<div class="grid-col-12">
+  <div class="dashboard-card animate-fade-in" style="padding: 20px 30px;">
+    <h5 class="card-title" style="display: flex; align-items: center;">
+      <i class="material-icons" style="margin-right: 10px;">history</i> Analysis History
+    </h5>
+    <div class="collection animate-fade-in" style="margin-top: 10px;">
+{% for entry in history %}
+<div class="collection-item"
+  style="display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-radius: 10px; border-left: 4px solid var(--primary); box-shadow: 0 2px 12px rgba(0,0,0,0.04); margin-bottom: 12px;">
+  <div style="display: flex; align-items: center;">
+    <i class="material-icons" style="font-size: 32px; color: var(--primary); margin-right: 15px;">insert_drive_file</i>
+    <div>
+      <div style="font-weight: 600; color: var(--text-dark);">
+        {% if entry.filename %}{{ entry.filename }}{% else %}Uploaded Text{% endif %}
+      </div>
+      <div style="font-size: 14px; color: var(--text-medium);">
+        {{ entry.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}
+      </div>
+    </div>
+  </div>
+  <div style="display: flex; align-items: center; gap: 10px;">
+    {% if entry.filename %}
+    <a href="/download_file/{{ entry._id }}" class="btn-flat tooltipped" data-position="top" data-tooltip="Download">
+      <i class="material-icons blue-text">file_download</i>
+    </a>
+    {% endif %}
+    <a href="/dashboard?history_id={{ entry._id }}" class="btn-flat tooltipped" data-position="top"
+      data-tooltip="View/Edit">
+      <i class="material-icons blue-text">visibility</i>
+    </a>
+    <button class="btn-flat tooltipped" data-position="top" data-tooltip="Delete"
+      onclick="deleteEntry('{{ entry._id }}')">
+      <i class="material-icons red-text">delete</i>
+    </button>
+  </div>
+</div>
+{% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+
+
+            </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col s12 center-align">
+                    <div class="footer-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Help Center</a>
+                        <a href="#">Contact Us</a>
+                    </div>
+                    <div class="copyright">
+                        <i class="material-icons tiny">copyright</i>
+                        <span>2025 SusTerms | All Rights Reserved</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize Materialize components
+            M.AutoInit();
+            const tooltippedElems = document.querySelectorAll('.tooltipped');
+M.Tooltip.init(tooltippedElems);
+
+            // Initialize dropdown
+            const dropdownElems = document.querySelectorAll('.dropdown-trigger');
+            M.Dropdown.init(dropdownElems, {
+                coverTrigger: false,
+                constrainWidth: false
+            });
+
+            // Add animation classes with delay
+            const animatedElements = document.querySelectorAll('.animate-fade-in');
+            animatedElements.forEach((el, index) => {
+                el.style.animationDelay = `${index * 0.1}s`;
+            });
+
+            // Form submission with loading indicator
+            const form = document.getElementById('analysis-form');
+            const loader = document.getElementById('loader');
+
+            if (form) {
+                form.addEventListener('submit', function () {
+                    // Hide form, show loader
+                    form.style.display = 'none';
+                    loader.style.display = 'flex';
+
+                    // Submit form after a short delay to show animation
+                    /*
+                    setTimeout(() => {
+                        form.submit();
+                    }, 500);
+*/
+                    return false;
+                });
+            }
+
+            // Auto-scroll to results if they exist
+            const resultsAnchor = document.getElementById('results-anchor');
+            if (resultsAnchor) {
+                setTimeout(() => {
+                    resultsAnchor.scrollIntoView({ behavior: 'smooth' });
+                }, 1000); // Delay to ensure animations complete
+            }
+        });
+        function updateDashboard(index) {
+            // Here you would retrieve the relevant history entry and update the summary/risks sections.
+            console.log("Updating dashboard with history entry:", index);
+        }
+
+        function deleteEntry(id) {
+            if (confirm('Are you sure you want to delete this entry?')) {
+              fetch(`/api/delete_entry/${id}`, {
+                method: 'DELETE',
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              })
+                .then(res => res.json())
+                .then(data => {
+                  if (data.message) {
+                    M.toast({ html: data.message, classes: 'green' });
+                    setTimeout(() => location.reload(), 1000);
+                  } else {
+                    M.toast({ html: data.error, classes: 'red' });
+                  }
+                })
+                .catch(err => {
+                  console.error(err);
+                  M.toast({ html: 'Something went wrong.', classes: 'red' });
+                });
+            }
+          } 
+    </script>
+</body>
+
+</html>

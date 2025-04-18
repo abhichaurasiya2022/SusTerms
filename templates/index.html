@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SusTerms | Analyze Contracts Smarter</title>
+
+  <!-- Fonts + Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Materialize CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #f5f7fa;
+      color: #333;
+    }
+
+    .navbar {
+      background: white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .brand-logo span:first-child {
+      color: #1976d2;
+      font-weight: bold;
+    }
+
+    .brand-logo span:last-child {
+      color: #e91e63;
+      font-weight: bold;
+    }
+
+    .hero {
+      padding: 100px 20px 80px;
+      background: linear-gradient(to right, #e3f2fd, #fce4ec);
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #0d47a1;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      max-width: 700px;
+      margin: 0 auto 30px;
+      color: #555;
+    }
+
+    .hero .btn-large {
+      margin: 0 10px;
+      border-radius: 8px;
+    }
+
+    .features {
+      background: #fff;
+      padding: 60px 20px;
+    }
+
+    .features .feature-icon {
+      font-size: 48px;
+      color: #1976d2;
+      margin-bottom: 10px;
+    }
+
+    .feature-box {
+      padding: 30px 15px;
+    }
+
+    .feature-box h5 {
+      font-weight: 600;
+      margin-top: 10px;
+      margin-bottom: 15px;
+    }
+
+    .footer {
+      background-color: #263238;
+      color: white;
+      padding: 30px 0;
+      text-align: center;
+    }
+
+    @media only screen and (max-width: 600px) {
+      .hero h1 {
+        font-size: 2.4rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-wrapper container">
+      <a href="#" class="brand-logo"><span>Sus</span><span>Terms</span></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="/login">Login</a></li>
+        <li><a href="/register">Register</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1>Don’t Get Tricked by Fine Print</h1>
+      <p><strong>SusTerms</strong> uses AI to break down complex Terms of Service, contracts, and privacy policies — and shows you exactly what you’re agreeing to.</p>
+      <a href="/login" class="btn-large blue darken-2 waves-effect waves-light">
+        <i class="material-icons left">login</i> Login
+      </a>
+      <a href="/register" class="btn-large pink lighten-2 black-text waves-effect waves-dark">
+        <i class="material-icons left">person_add</i> Register
+      </a>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="container">
+      <div class="row center">
+        <div class="col s12 m4 feature-box">
+          <i class="material-icons feature-icon">gavel</i>
+          <h5>AI-Powered Summaries</h5>
+          <p>Upload a document or screenshot, and SusTerms gives you a plain-English summary in seconds.</p>
+        </div>
+        <div class="col s12 m4 feature-box">
+          <i class="material-icons feature-icon">warning</i>
+          <h5>Red Flag Detection</h5>
+          <p>Automatically detects suspicious terms like auto-renewals, data sharing, and sketchy clauses.</p>
+        </div>
+        <div class="col s12 m4 feature-box">
+          <i class="material-icons feature-icon">lock</i>
+          <h5>Protect Your Privacy</h5>
+          <p>Make informed choices before you click “I Agree” — because your data should be your decision.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>© 2025 SusTerms — Making legal stuff human-readable.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>M.AutoInit();</script>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analysis Results</title>
+    <style>
+        body { font-family: sans-serif; }
+        .risk { background-color: #ffc; padding: 5px; margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <h1>Analysis Results</h1>
+    <h2>Summary</h2>
+    <p>{{ summary|safe }}</p>
+    <h2>Highlighted Risks</h2>
+    {% if risks %}
+        <ul>
+        {% for risk in risks %}
+          <li class="risk">
+              {{ risk['sentence'] }} <span style="font-size: larger;">{{ risk['threat_level'] }}</span>
+          </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No risks found.</p>
+    {% endif %}
+    <a href="/">Analyze another document</a>
+</body>
+</html>
